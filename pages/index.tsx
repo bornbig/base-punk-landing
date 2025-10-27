@@ -97,7 +97,7 @@ export default function ComingSoon() {
 
       {/* Center content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 -mt-40">
-        <div className="text-white mb-2" style={{ fontSize: 'clamp(4rem, 15vw, 12rem)', letterSpacing: '0.3em', fontWeight: 400 }}>
+        <div className="text-gray-500 mb-1" style={{ fontSize: 'clamp(4rem, 15vw, 12rem)', letterSpacing: '0.3em', fontWeight: 400 }}>
           $BASED
         </div>
 
