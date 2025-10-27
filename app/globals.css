@@ -14,6 +14,17 @@ body {
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Prevent flash of unstyled content */
+html {
+  background-color: #000;
+}
+
+body:not(.fonts-loaded) {
+  visibility: hidden;
 }
 
 /* Custom scrollbar */
