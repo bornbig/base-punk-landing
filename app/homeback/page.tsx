@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-export default function Home() {
+export default function Dashboard() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   const nfts = [
@@ -27,7 +27,7 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Doto', sans-serif" }}>
+    <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
       <nav className="border-b border-gray-700">
         <div className="flex items-center justify-between h-12">
@@ -89,7 +89,7 @@ export default function Home() {
                   </div>
                   <div className="px-3 pb-3 text-center">
                     <p className="text-xs font-bold text-white">BASED PUNK</p>
-                    <p className="text-xs text-gray-400 mt-1" style={{ fontFamily: "'Doto', sans-serif" }}>#{nft.id}</p>
+                    <p className="text-xs text-gray-400 mt-1">#{nft.id}</p>
                   </div>
                 </div>
               </div>
