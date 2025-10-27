@@ -1,30 +1,32 @@
-import { useEffect, useRef } from 'react';
+'use client'
 
-export default function ComingSoon() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+import { useEffect, useRef } from 'react'
+
+export default function Home() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
     // Set canvas size
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
 
     // Grid configuration
-    const gridSize = 8;
-    const cols = Math.ceil(canvas.width / gridSize);
-    const rows = Math.ceil(canvas.height / gridSize);
+    const gridSize = 8
+    const cols = Math.ceil(canvas.width / gridSize)
+    const rows = Math.ceil(canvas.height / gridSize)
 
     // Create grid cells
-    const cells: { x: number; y: number; alpha: number; targetAlpha: number; speed: number }[] = [];
+    const cells: { x: number; y: number; alpha: number; targetAlpha: number; speed: number }[] = []
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
@@ -34,45 +36,45 @@ export default function ComingSoon() {
           alpha: Math.random() * 0.15,
           targetAlpha: Math.random() * 0.15,
           speed: 0.002 + Math.random() * 0.003
-        });
+        })
       }
     }
 
     // Animation loop
-    let animationId: number;
+    let animationId: number
     const animate = () => {
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#000000'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       cells.forEach(cell => {
         // Randomly change target alpha
         if (Math.random() < 0.005) {
-          cell.targetAlpha = Math.random() * 0.15;
+          cell.targetAlpha = Math.random() * 0.15
         }
 
         // Smoothly transition to target alpha
         if (Math.abs(cell.alpha - cell.targetAlpha) > 0.001) {
-          cell.alpha += (cell.targetAlpha - cell.alpha) * cell.speed * 10;
+          cell.alpha += (cell.targetAlpha - cell.alpha) * cell.speed * 10
         }
 
         // Draw cell
-        ctx.fillStyle = `rgba(128, 128, 128, ${cell.alpha})`;
-        ctx.fillRect(cell.x, cell.y, gridSize - 1, gridSize - 1);
-      });
+        ctx.fillStyle = `rgba(128, 128, 128, ${cell.alpha})`
+        ctx.fillRect(cell.x, cell.y, gridSize - 1, gridSize - 1)
+      })
 
-      animationId = requestAnimationFrame(animate);
-    };
+      animationId = requestAnimationFrame(animate)
+    }
 
-    animate();
+    animate()
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
+      window.removeEventListener('resize', resizeCanvas)
+      cancelAnimationFrame(animationId)
+    }
+  }, [])
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden" style={{ fontFamily: "'Doto', sans-serif" }}>
+    <div className="relative w-full h-screen bg-black overflow-hidden">
       {/* Animated grid background */}
       <canvas
         ref={canvasRef}
@@ -110,5 +112,5 @@ export default function ComingSoon() {
         </button>
       </div>
     </div>
-  );
+  )
 }
