@@ -24,7 +24,7 @@ export default function Home() {
       </div>
 
       {/* Center content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 -mt-40">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
         {/* Marquee ticker */}
         <div className="w-full overflow-hidden mb-1">
           <div className="marquee">
