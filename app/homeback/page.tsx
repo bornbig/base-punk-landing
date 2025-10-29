@@ -133,7 +133,7 @@ export default function Dashboard() {
             {/* Currently Holding */}
             <div className="p-6 md:p-10">
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-                <h2 className="text-2xl tracking-wider" style={{ color: '#595959', fontWeight: 400 }}>CURRENTLY<br />HOLDING</h2>
+                <h2 className="text-4xl tracking-wider font-extrabold" style={{ color: '#595959' }}>CURRENTLY<br />HOLDING</h2>
                 <div className="text-right">
                   <div className="text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
                   <div className="text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>+ 32 NFTS</div>
