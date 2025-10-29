@@ -73,7 +73,7 @@ export default function Dashboard() {
 
       {/* NFT Gallery */}
       <section className="px-6 py-12 bg-black">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-t border-dotted border-gray-700">
             {nfts.map((nft) => (
               <div key={nft.id} className="relative group border-r border-b border-dotted border-gray-700">
@@ -100,7 +100,7 @@ export default function Dashboard() {
 
       {/* Token Stats Bar */}
       <section className="px-6 py-4 bg-black">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="flex items-center h-16 border" style={{ backgroundColor: '#0B0B0B', borderColor: '#1C1C1C', letterSpacing: '0.5px' }}>
             <div className="px-5 h-full flex items-center font-bold border-r" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASESTRATEGY™</div>
             <div className="px-16 h-full flex items-center border-r" style={{ borderColor: '#1C1C1C' }}></div>
@@ -128,7 +128,7 @@ export default function Dashboard() {
 
       {/* Holdings & Buying Section - Combined Box */}
       <section className="px-6 py-16 bg-black">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             {/* Currently Holding */}
             <div className="p-6 md:p-10">
@@ -202,7 +202,7 @@ export default function Dashboard() {
 
       {/* Based Punk Council */}
       <section className="px-6 py-16 bg-black">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             <div className="p-6 md:p-8">
               <div className="flex flex-col md:flex-row items-start justify-between gap-8">
@@ -231,7 +231,7 @@ export default function Dashboard() {
 
       {/* FAQ Section - Side by Side Layout */}
       <section className="px-6 py-16">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Left Side - Heading */}
             <div>
@@ -280,7 +280,7 @@ export default function Dashboard() {
 
       {/* Bottom Disclaimer Section */}
       <section className="px-6 py-4 bg-black">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             <div className="flex items-stretch" style={{ height: '100%' }}>
               <div className="px-6 py-3 flex items-center" style={{ borderRight: '1px solid #2B2B2B', color: 'white' }}>
