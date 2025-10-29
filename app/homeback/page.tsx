@@ -78,8 +78,8 @@ export default function Dashboard() {
             {nfts.map((nft) => (
               <div key={nft.id} className="relative group border-r border-b border-dotted border-gray-700">
                 <div className="absolute top-2 right-2 z-10">
-                  <button className="text-white hover:text-gray-400">
-                    <i className="fa-solid fa-ellipsis text-xl"></i>
+                  <button className="text-white hover:text-gray-400 text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px' }}>
+                    ···
                   </button>
                 </div>
                 <div className="bg-black hover:bg-gray-900 transition">
@@ -88,8 +88,8 @@ export default function Dashboard() {
                     <div className="w-20 h-20 bg-white rounded-full"></div>
                   </div>
                   <div className="px-3 pb-3 text-center">
-                    <p className="text-xs font-bold text-white">BASED PUNK</p>
-                    <p className="text-xs text-gray-400 mt-1">#{nft.id}</p>
+                    <p className="text-m text-white" style={{ fontWeight: 900 }}>BASED PUNK</p>
+                    <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.id}</p>
                   </div>
                 </div>
               </div>
@@ -235,7 +235,7 @@ export default function Dashboard() {
           <div className="grid md:grid-cols-2 gap-12">
             {/* Left Side - Heading */}
             <div>
-              <h2 className="text-3xl font-bold tracking-wider sticky top-8" style={{ color: '#595959' }}>
+              <h2 className="text-5xl font-bold tracking-wider sticky top-8" style={{ color: '#595959' }}>
                 FREQUENTLY<br />
                 ASKED QUESTIONS
               </h2>
@@ -251,11 +251,11 @@ export default function Dashboard() {
                       className="w-full py-4 flex items-center justify-between text-left"
                       style={{ outline: 'none', border: 'none', background: 'transparent' }}
                     >
-                      <span className="text-xs font-bold tracking-wider">{faq.question}</span>
+                      <span className="text-m font-bold tracking-wider">{faq.question}</span>
                       <i className={`fa-solid fa-plus text-lg transition-transform ${openFaq === index ? 'rotate-45' : ''}`} style={{ color: '#2B2B2B' }}></i>
                     </button>
                     {openFaq === index && (
-                      <div className="pb-4 text-xs tracking-wider" style={{ color: '#595959' }}>
+                      <div className="pb-4 text-s tracking-wider" style={{ color: '#595959' }}>
                         <p>Answer content goes here...</p>
                       </div>
                     )}
