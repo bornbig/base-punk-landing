@@ -73,13 +73,13 @@ export default function Dashboard() {
 
       {/* NFT Gallery */}
       <section className="px-6 py-12 bg-black">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-t border-dotted border-gray-700">
             {nfts.map((nft) => (
               <div key={nft.id} className="relative group border-r border-b border-dotted border-gray-700">
                 <div className="absolute top-2 right-2 z-10">
-                  <button className="text-white hover:text-gray-400">
-                    <i className="fa-solid fa-ellipsis text-xl"></i>
+                  <button className="text-white hover:text-gray-400 text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px' }}>
+                    ···
                   </button>
                 </div>
                 <div className="bg-black hover:bg-gray-900 transition">
@@ -88,8 +88,8 @@ export default function Dashboard() {
                     <div className="w-20 h-20 bg-white rounded-full"></div>
                   </div>
                   <div className="px-3 pb-3 text-center">
-                    <p className="text-xs font-bold text-white">BASED PUNK</p>
-                    <p className="text-xs text-gray-400 mt-1">#{nft.id}</p>
+                    <p className="text-m text-white" style={{ fontWeight: 900 }}>BASED PUNK</p>
+                    <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.id}</p>
                   </div>
                 </div>
               </div>
@@ -100,26 +100,26 @@ export default function Dashboard() {
 
       {/* Token Stats Bar */}
       <section className="px-6 py-4 bg-black">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="flex items-center h-16 border" style={{ backgroundColor: '#0B0B0B', borderColor: '#1C1C1C', letterSpacing: '0.5px' }}>
-            <div className="px-5 h-full flex items-center font-bold border-r" style={{ borderColor: '#1C1C1C', fontSize: '16px', letterSpacing: '1px' }}>BASESTRATEGY™</div>
+            <div className="px-5 h-full flex items-center font-bold border-r" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASESTRATEGY™</div>
             <div className="px-16 h-full flex items-center border-r" style={{ borderColor: '#1C1C1C' }}></div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '13px', letterSpacing: '0.5px' }}>
+            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
               <span style={{ color: '#595959' }}>CA</span> <span className="ml-2" style={{ color: 'white' }}>0XC506...3E1F</span>
             </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '13px', letterSpacing: '0.5px' }}>
+            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
               <span style={{ color: '#595959' }}>M.CAP</span> <span className="ml-2" style={{ color: 'white' }}>$240K</span>
             </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '13px', letterSpacing: '0.5px' }}>
+            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
               <span style={{ color: '#595959' }}>PRICE</span> <span className="ml-2" style={{ color: 'white' }}>$0.00024</span>
             </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '13px', letterSpacing: '0.5px' }}>
+            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
               <span style={{ color: '#595959' }}>24H VOLUME</span> <span className="ml-2" style={{ color: 'white' }}>$2.4M</span>
             </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '13px', letterSpacing: '0.5px' }}>
+            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
               <span style={{ color: '#595959' }}>BURNED</span> <span className="ml-2" style={{ color: 'white' }}>0.4% (6.3M)</span>
             </div>
-            <div className="px-5 h-full flex items-center font-bold gap-2" style={{ color: 'white', fontSize: '15px', letterSpacing: '0.5px' }}>
+            <div className="px-5 h-full flex items-center font-bold gap-2" style={{ color: 'white', fontSize: '17px', letterSpacing: '0.5px' }}>
               TRADE <i className="fa-solid fa-arrow-up-right-from-square"></i>
             </div>
           </div>
@@ -128,56 +128,61 @@ export default function Dashboard() {
 
       {/* Holdings & Buying Section - Combined Box */}
       <section className="px-6 py-16 bg-black">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             {/* Currently Holding */}
             <div className="p-6 md:p-10">
-              <div className="flex flex-col md:flex-row items-start justify-between">
-                <h2 className="text-3xl font-bold mb-4 md:mb-0 tracking-wider" style={{ color: '#595959' }}>CURRENTLY<br />HOLDING</h2>
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+                <h2 className="text-4xl tracking-wider font-extrabold" style={{ color: '#595959' }}>CURRENTLY<br />HOLDING</h2>
                 <div className="text-right">
-                  <div className="text-5xl font-bold mb-3 tracking-wider" style={{ color: 'white' }}>6.9432 ETH</div>
-                  <div className="text-5xl font-bold tracking-wider" style={{ color: 'white' }}>+ 32 NFTS</div>
+                  <div className="text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
+                  <div className="text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>+ 32 NFTS</div>
                 </div>
               </div>
             </div>
 
             {/* Horizontal Divider */}
-            <div className="border-t" style={{ borderColor: '#2B2B2B' }}></div>
+            <div className="px-6 md:px-10">
+              <div className="border-t" style={{ borderColor: '#2B2B2B' }}></div>
+            </div>
 
             {/* We Are Buying Next */}
             <div className="p-6 md:p-10">
               <div className="flex flex-col lg:flex-row gap-12">
-                <div style={{ width: '40%' }}>
-                  <h2 className="text-3xl font-bold mb-4 tracking-wider" style={{ color: '#595959' }}>WE ARE BUYING NEXT</h2>
-                  <div className="text-5xl font-bold mb-4 tracking-wider" style={{ color: 'white' }}>6.9432 ETH</div>
+                <div style={{ width: '30%' }}>
+                  <h2 className="text-3xl mb-4 tracking-wider font-extrabold" style={{ color: '#595959' }}>WE ARE BUYING NEXT</h2>
+                  <div className="text-5xl mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
                   
                   {/* Progress Bar - 5 rows x 20 boxes */}
-                  <div className="mb-8" style={{ width: '100%' }}>
-                    <div className="space-y-2 mb-3">
+                  <div className="mb-8">
+                    <div className="space-y-3 mb-3">
                       {[...Array(5)].map((_, rowIndex) => (
-                        <div key={rowIndex} className="flex gap-2">
+                        <div key={rowIndex} className="flex gap-3">
                           {[...Array(20)].map((_, colIndex) => (
                             <div
                               key={colIndex}
-                              className="w-4 h-4"
-                              style={{ backgroundColor: rowIndex === 0 ? 'white' : '#202020' }}
+                              style={{ 
+                                width: '8px', 
+                                height: '8px',
+                                backgroundColor: rowIndex === 0 ? 'white' : '#202020'
+                              }}
                             ></div>
                           ))}
                         </div>
                       ))}
                     </div>
-                    <div className="flex justify-between text-sm tracking-wider font-bold">
+                    <div className="text-sm tracking-wider font-bold" style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span style={{ color: '#595959' }}>CURRENT PROGRESS</span>
-                      <span className="font-bold" style={{ color: 'white' }}>30%</span>
+                      <span style={{ color: 'white' }}>30%</span>
                     </div>
                   </div>
 
                   {/* Owner and Button */}
-                  <div className="flex gap-4" style={{ width: '100%' }}>
-                    <div className="border px-4 py-2.5 text-sm font-bold tracking-wider flex-1" style={{ borderColor: '#2B2B2B', color: '#595959' }}>
+                  <div className="flex gap-4">
+                    <div className="border px-2 py-3 text-sm tracking-wider flex-1 font-bold" style={{ borderColor: '#2B2B2B', color: '#595959', whiteSpace: 'nowrap' }}>
                       OWNER <span style={{ color: 'white' }}>0XM0FA...6066</span>
                     </div>
-                    <button className="border border-white px-4 py-2.5 text-sm font-bold tracking-wider flex-1" style={{ borderColor: '#2B2B2B',color: 'white' }}>
+                    <button className="border border-white px-2 py-3 text-sm tracking-wider flex-1 font-bold" style={{ borderColor: '#2B2B2B', color: 'white', whiteSpace: 'nowrap' }}>
                       VIEW ON MARKETPLACE
                     </button>
                   </div>
@@ -197,7 +202,7 @@ export default function Dashboard() {
 
       {/* Based Punk Council */}
       <section className="px-6 py-16 bg-black">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             <div className="p-6 md:p-8">
               <div className="flex flex-col md:flex-row items-start justify-between gap-8">
@@ -215,7 +220,7 @@ export default function Dashboard() {
                     COMING SOON <i className="fa-solid fa-arrow-up-right-from-square"></i>
                   </button>
                 </div>
-                <div className="flex items-center" style={{ fontSize: '180px', fontWeight: 'bold', color: 'white', letterSpacing: '0.15em', lineHeight: '1' }}>
+                <div className="flex items-center" style={{ fontSize: '180px', fontWeight: 300, color: 'white', letterSpacing: '0.15em', lineHeight: '1' }}>
                   01X
                 </div>
               </div>
@@ -226,11 +231,11 @@ export default function Dashboard() {
 
       {/* FAQ Section - Side by Side Layout */}
       <section className="px-6 py-16">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Left Side - Heading */}
             <div>
-              <h2 className="text-3xl font-bold tracking-wider sticky top-8" style={{ color: '#595959' }}>
+              <h2 className="text-5xl font-bold tracking-wider sticky top-8" style={{ color: '#595959' }}>
                 FREQUENTLY<br />
                 ASKED QUESTIONS
               </h2>
@@ -246,11 +251,11 @@ export default function Dashboard() {
                       className="w-full py-4 flex items-center justify-between text-left"
                       style={{ outline: 'none', border: 'none', background: 'transparent' }}
                     >
-                      <span className="text-xs font-bold tracking-wider">{faq.question}</span>
+                      <span className="text-m font-bold tracking-wider">{faq.question}</span>
                       <i className={`fa-solid fa-plus text-lg transition-transform ${openFaq === index ? 'rotate-45' : ''}`} style={{ color: '#2B2B2B' }}></i>
                     </button>
                     {openFaq === index && (
-                      <div className="pb-4 text-xs tracking-wider" style={{ color: '#595959' }}>
+                      <div className="pb-4 text-s tracking-wider" style={{ color: '#595959' }}>
                         <p>Answer content goes here...</p>
                       </div>
                     )}
@@ -263,17 +268,19 @@ export default function Dashboard() {
       </section>
 
       {/* BASEDSTR Dot Matrix Section */}
-      <section className="py-16 bg-black">
+      <section className="py-16 bg-black overflow-hidden">
         <div className="w-full">
-          <div className="flex justify-center items-center" style={{ fontSize: '180px', fontWeight: 'bold', color: '#2B2B2B', letterSpacing: '0.4em', lineHeight: '1' }}>
-            BASEDST
+          <div className="marquee">
+            <span style={{ fontSize: '240px', fontWeight: 300, color: '#2B2B2B', letterSpacing: '0.4em', lineHeight: '1', whiteSpace: 'nowrap' }}>
+              $BASEDSTR $BASEDSTR $BASEDSTR $BASEDSTR $BASEDSTR $BASEDSTR
+            </span>
           </div>
         </div>
       </section>
 
       {/* Bottom Disclaimer Section */}
       <section className="px-6 py-4 bg-black">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             <div className="flex items-stretch" style={{ height: '100%' }}>
               <div className="px-6 py-3 flex items-center" style={{ borderRight: '1px solid #2B2B2B', color: 'white' }}>
