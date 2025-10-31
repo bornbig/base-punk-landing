@@ -60,18 +60,20 @@ export default function Dashboard() {
         </div>
 
         {/* Mobile Menu Dropdown */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-black border-b border-gray-700 z-50">
-            <a href="#buy-sell" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>BUY/SELL</a>
-            <a href="#how-it-works" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS?</a>
-            <a href="#holdings" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>HOLDINGS</a>
-            <a href="#mission" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>OUR MISSION</a>
-            <a href="#connect" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>CONNECT WALLET</a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="block px-6 py-4 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>
-              <i className="fa-brands fa-x-twitter text-base mr-2"></i> TWITTER
-            </a>
-          </div>
-        )}
+        <div 
+          className={`md:hidden absolute top-full left-0 right-0 bg-black border-b border-gray-700 z-50 overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 border-b-0'
+          }`}
+        >
+          <a href="#buy-sell" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>BUY/SELL</a>
+          <a href="#how-it-works" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS?</a>
+          <a href="#holdings" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>HOLDINGS</a>
+          <a href="#mission" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>OUR MISSION</a>
+          <a href="#connect" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>CONNECT WALLET</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="block px-6 py-4 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>
+            <i className="fa-brands fa-x-twitter text-base mr-2"></i> TWITTER
+          </a>
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -99,18 +101,18 @@ export default function Dashboard() {
             {nfts.map((nft) => (
               <div key={nft.id} className="relative group border-r border-b border-dotted border-gray-700">
                 <div className="absolute top-2 right-2 z-10">
-                  <button className="text-white hover:text-gray-400 text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px' }}>
+                  <button className="text-white group-hover:text-black text-xl transition-colors" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px' }}>
                     ···
                   </button>
                 </div>
-                <div className="bg-black hover:bg-gray-900 transition">
-                  <div className="bg-black flex items-center justify-center py-6">
+                <div className="bg-black hover:bg-white transition-colors duration-300">
+                  <div className="bg-black group-hover:bg-white flex items-center justify-center py-6 transition-colors duration-300">
                     {/* Pixel Art Placeholder - In production, use actual NFT images */}
-                    <div className="w-20 h-20 bg-white rounded-full"></div>
+                    <div className="w-20 h-20 bg-white group-hover:bg-black rounded-full transition-colors duration-300"></div>
                   </div>
                   <div className="px-3 pb-3 text-center">
-                    <p className="text-m text-white" style={{ fontWeight: 900 }}>BASED PUNK</p>
-                    <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.id}</p>
+                    <p className="text-m text-white group-hover:text-black transition-colors duration-300" style={{ fontWeight: 900 }}>BASED PUNK</p>
+                    <p className="text-sm text-gray-400 group-hover:text-black mt-1 font-extrabold transition-colors duration-300">#{nft.id}</p>
                   </div>
                 </div>
               </div>
