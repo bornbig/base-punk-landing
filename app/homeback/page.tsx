@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 export default function Dashboard() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const nfts = [
     { id: 1, name: 'BASED PUNK #1' },
@@ -29,28 +30,48 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-      <nav className="border-b border-gray-700">
+      <nav className="border-b border-gray-700 relative">
         <div className="flex items-center justify-between h-12">
           <div className="flex items-center h-full">
             <div className="pl-6 pr-6 h-full flex items-center text-base font-bold tracking-wider border-r border-gray-700">
               BASEDSTR
             </div>
           </div>
-          <div className="hidden md:flex items-center h-full text-base font-bold">
-            <div className="border-l border-gray-700 h-full"></div>
-            <a href="#" className="px-6 h-full flex items-center border-r border-gray-700 hover:bg-gray-900 transition">BUY/SELL</a>
-            <a href="#" className="px-6 h-full flex items-center border-r border-gray-700 hover:bg-gray-900 transition">HOW IT WORKS?</a>
-            <a href="#" className="px-6 h-full flex items-center border-r border-gray-700 hover:bg-gray-900 transition">HOLDINGS</a>
-            <a href="#" className="px-6 h-full flex items-center border-r border-gray-700 hover:bg-gray-900 transition">OUR MISSION</a>
-            <a href="#" className="px-6 h-full flex items-center border-r border-gray-700 hover:bg-gray-900 transition">CONNECT WALLET</a>
-            <a href="#" className="px-6 h-full flex items-center hover:bg-gray-900 transition">
+          
+          {/* Desktop Menu - Right aligned */}
+          <div className="hidden md:flex items-center h-full text-base font-bold ml-auto">
+            <a href="#buy-sell" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">BUY/SELL</a>
+            <a href="#how-it-works" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">HOW IT WORKS?</a>
+            <a href="#holdings" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">HOLDINGS</a>
+            <a href="#mission" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">OUR MISSION</a>
+            <a href="#connect" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">CONNECT WALLET</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">
               <i className="fa-brands fa-x-twitter text-base"></i>
             </a>
           </div>
-          <button className="md:hidden px-6">
-            <i className="fa-solid fa-xmark text-2xl"></i>
+
+          {/* Mobile Burger Menu */}
+          <button 
+            className="md:hidden px-6 h-full flex items-center border-l border-gray-700"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'} text-xl`}></i>
           </button>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black border-b border-gray-700 z-50">
+            <a href="#buy-sell" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>BUY/SELL</a>
+            <a href="#how-it-works" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS?</a>
+            <a href="#holdings" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>HOLDINGS</a>
+            <a href="#mission" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>OUR MISSION</a>
+            <a href="#connect" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>CONNECT WALLET</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="block px-6 py-4 hover:bg-gray-900 transition font-bold" onClick={() => setMobileMenuOpen(false)}>
+              <i className="fa-brands fa-x-twitter text-base mr-2"></i> TWITTER
+            </a>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -73,7 +94,7 @@ export default function Dashboard() {
 
       {/* NFT Gallery */}
       <section className="px-6 py-12 bg-black">
-        <div className="max-w-[1300px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-t border-dotted border-gray-700">
             {nfts.map((nft) => (
               <div key={nft.id} className="relative group border-r border-b border-dotted border-gray-700">
@@ -100,27 +121,29 @@ export default function Dashboard() {
 
       {/* Token Stats Bar */}
       <section className="px-6 py-4 bg-black">
-        <div className="max-w-[1300px] mx-auto">
-          <div className="flex items-center h-16 border" style={{ backgroundColor: '#0B0B0B', borderColor: '#1C1C1C', letterSpacing: '0.5px' }}>
-            <div className="px-5 h-full flex items-center font-bold border-r" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASESTRATEGY™</div>
-            <div className="px-16 h-full flex items-center border-r" style={{ borderColor: '#1C1C1C' }}></div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-              <span style={{ color: '#595959' }}>CA</span> <span className="ml-2" style={{ color: 'white' }}>0XC506...3E1F</span>
-            </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-              <span style={{ color: '#595959' }}>M.CAP</span> <span className="ml-2" style={{ color: 'white' }}>$240K</span>
-            </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-              <span style={{ color: '#595959' }}>PRICE</span> <span className="ml-2" style={{ color: 'white' }}>$0.00024</span>
-            </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-              <span style={{ color: '#595959' }}>24H VOLUME</span> <span className="ml-2" style={{ color: 'white' }}>$2.4M</span>
-            </div>
-            <div className="px-5 h-full flex items-center border-r font-bold" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-              <span style={{ color: '#595959' }}>BURNED</span> <span className="ml-2" style={{ color: 'white' }}>0.4% (6.3M)</span>
-            </div>
-            <div className="px-5 h-full flex items-center font-bold gap-2" style={{ color: 'white', fontSize: '17px', letterSpacing: '0.5px' }}>
-              TRADE <i className="fa-solid fa-arrow-up-right-from-square"></i>
+        <div className="max-w-[1400px] mx-auto">
+          <div className="border overflow-x-auto md:overflow-visible scrollbar-hide" style={{ backgroundColor: '#0B0B0B', borderColor: '#1C1C1C', letterSpacing: '0.5px' }}>
+            <div className="flex items-center h-16 min-w-max md:min-w-0">
+              <div className="px-5 h-full flex items-center font-bold border-r whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASESTRATEGY™</div>
+              <div className="px-16 h-full flex items-center border-r" style={{ borderColor: '#1C1C1C' }}></div>
+              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
+                <span style={{ color: '#595959' }}>CA</span> <span className="ml-2" style={{ color: 'white' }}>COMING SOON</span>
+              </div>
+              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
+                <span style={{ color: '#595959' }}>M.CAP</span> <span className="ml-2" style={{ color: 'white' }}>$240K</span>
+              </div>
+              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
+                <span style={{ color: '#595959' }}>PRICE</span> <span className="ml-2" style={{ color: 'white' }}>$0.00024</span>
+              </div>
+              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
+                <span style={{ color: '#595959' }}>24H VOLUME</span> <span className="ml-2" style={{ color: 'white' }}>$2.4M</span>
+              </div>
+              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
+                <span style={{ color: '#595959' }}>BURNED</span> <span className="ml-2" style={{ color: 'white' }}>0.4% (6.3M)</span>
+              </div>
+              <div className="px-5 h-full flex items-center font-bold gap-2 whitespace-nowrap" style={{ color: 'white', fontSize: '17px', letterSpacing: '0.5px' }}>
+                TRADE <i className="fa-solid fa-arrow-up-right-from-square"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -128,15 +151,15 @@ export default function Dashboard() {
 
       {/* Holdings & Buying Section - Combined Box */}
       <section className="px-6 py-16 bg-black">
-        <div className="max-w-[1300px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             {/* Currently Holding */}
             <div className="p-6 md:p-10">
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-                <h2 className="text-4xl tracking-wider font-extrabold" style={{ color: '#595959' }}>CURRENTLY<br />HOLDING</h2>
-                <div className="text-right">
-                  <div className="text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
-                  <div className="text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>+ 32 NFTS</div>
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <h2 className="text-2xl md:text-4xl tracking-wider font-extrabold" style={{ color: '#595959' }}>CURRENTLY<br />HOLDING</h2>
+                <div className="text-left md:text-right">
+                  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
+                  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>+ 32 NFTS</div>
                 </div>
               </div>
             </div>
@@ -148,10 +171,10 @@ export default function Dashboard() {
 
             {/* We Are Buying Next */}
             <div className="p-6 md:p-10">
-              <div className="flex flex-col lg:flex-row gap-12">
-                <div style={{ width: '30%' }}>
-                  <h2 className="text-3xl mb-4 tracking-wider font-extrabold" style={{ color: '#595959' }}>WE ARE BUYING NEXT</h2>
-                  <div className="text-5xl mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
+              <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                <div className="w-full lg:w-[30%]">
+                  <h2 className="text-2xl md:text-3xl mb-4 tracking-wider font-extrabold" style={{ color: '#595959' }}>WE ARE BUYING NEXT</h2>
+                  <div className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
                   
                   {/* Progress Bar - 5 rows x 20 boxes */}
                   <div className="mb-8">
@@ -178,20 +201,20 @@ export default function Dashboard() {
                   </div>
 
                   {/* Owner and Button */}
-                  <div className="flex gap-4">
-                    <div className="border px-2 py-3 text-sm tracking-wider flex-1 font-bold" style={{ borderColor: '#2B2B2B', color: '#595959', whiteSpace: 'nowrap' }}>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="border px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: '#595959' }}>
                       OWNER <span style={{ color: 'white' }}>0XM0FA...6066</span>
                     </div>
-                    <button className="border border-white px-2 py-3 text-sm tracking-wider flex-1 font-bold" style={{ borderColor: '#2B2B2B', color: 'white', whiteSpace: 'nowrap' }}>
+                    <button className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: 'white' }}>
                       VIEW ON MARKETPLACE
                     </button>
                   </div>
                 </div>
 
                 {/* NFT Preview */}
-                <div className="flex justify-center lg:justify-end flex-1">
-                  <div className="w-72 h-80 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C1C1C' }}>
-                    <div className="w-56 h-56 bg-white rounded-full opacity-90"></div>
+                <div className="flex justify-center lg:justify-end w-full lg:flex-1 mt-8 lg:mt-0">
+                  <div className="w-64 h-72 md:w-72 md:h-80 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C1C1C' }}>
+                    <div className="w-48 h-48 md:w-56 md:h-56 bg-white rounded-full opacity-90"></div>
                   </div>
                 </div>
               </div>
@@ -202,26 +225,26 @@ export default function Dashboard() {
 
       {/* Based Punk Council */}
       <section className="px-6 py-16 bg-black">
-        <div className="max-w-[1300px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             <div className="p-6 md:p-8">
               <div className="flex flex-col md:flex-row items-start justify-between gap-8">
                 <div className="flex-1">
-                  <h2 className="text-3xl font-bold mb-4 tracking-wider">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-wider">
                     BASED PUNK COUNCIL<br />
                     <span className="font-bold tracking-wider">(COMING SOON)</span>
                   </h2>
-                  <p className="text-sm mb-6 max-w-2xl font-bold tracking-wider" style={{ color: '#595959' }}>
-                    THE TOP 1% OF BASEDSTR HOLDERS EARN A SEAT AT THE TABLE -<br />
-                    THE BASED PUNK COUNCIL. AN ELITE CIRCLE GUIDING FUTURE<br />
+                  <p className="text-xs md:text-sm mb-6 max-w-2xl font-bold tracking-wider" style={{ color: '#595959' }}>
+                    THE TOP 1% OF BASEDSTR HOLDERS EARN A SEAT AT THE TABLE -<br className="hidden md:block" />
+                    THE BASED PUNK COUNCIL. AN ELITE CIRCLE GUIDING FUTURE<br className="hidden md:block" />
                     PROTOCOL UPGRADES, CULTURAL COLLABS, AND TREASURY DECISIONS.
                   </p>
-                  <button className="px-8 py-3 font-bold tracking-wider transition flex items-center gap-2" style={{ backgroundColor: '#FFFFFF', color: '#000000', WebkitTextFillColor: '#000000' }}>
+                  <button className="px-6 md:px-8 py-2.5 md:py-3 text-sm font-bold tracking-wider transition flex items-center gap-2" style={{ backgroundColor: '#FFFFFF', color: '#000000', WebkitTextFillColor: '#000000' }}>
                     COMING SOON <i className="fa-solid fa-arrow-up-right-from-square"></i>
                   </button>
                 </div>
-                <div className="flex items-center" style={{ fontSize: '180px', fontWeight: 300, color: 'white', letterSpacing: '0.15em', lineHeight: '1' }}>
-                  01X
+                <div className="flex items-center justify-center md:justify-end w-full md:w-auto" style={{ fontWeight: 300, color: 'white', letterSpacing: '0.15em', lineHeight: '1' }}>
+                  <span className="text-[80px] md:text-[120px] lg:text-[180px]">01X</span>
                 </div>
               </div>
             </div>
@@ -231,7 +254,7 @@ export default function Dashboard() {
 
       {/* FAQ Section - Side by Side Layout */}
       <section className="px-6 py-16">
-        <div className="max-w-[1300px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Left Side - Heading */}
             <div>
@@ -280,7 +303,7 @@ export default function Dashboard() {
 
       {/* Bottom Disclaimer Section */}
       <section className="px-6 py-4 bg-black">
-        <div className="max-w-[1300px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="border" style={{ backgroundColor: '#0B0B0B', borderColor: '#2B2B2B' }}>
             <div className="flex items-stretch" style={{ height: '100%' }}>
               <div className="px-6 py-3 flex items-center" style={{ borderRight: '1px solid #2B2B2B', color: 'white' }}>
