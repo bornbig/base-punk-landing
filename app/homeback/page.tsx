@@ -1,10 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { fetchBestListing, type BasedPunksAPIResponse } from '@/lib/api'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 export default function Dashboard() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [apiData, setApiData] = useState<BasedPunksAPIResponse | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchBestListing()
+      .then(data => {
+        setApiData(data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Error fetching API data:', err)
+        setLoading(false)
+      })
+  }, [])
 
   const nfts = [
     { id: 1, name: 'BASED PUNK #1' },
@@ -34,7 +50,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between h-12">
           <div className="flex items-center h-full">
             <div className="pl-6 pr-6 h-full flex items-center text-base font-bold tracking-wider border-r border-gray-700">
-              BASEDSTR
+              BASED STRATEGY
             </div>
           </div>
           
@@ -44,9 +60,39 @@ export default function Dashboard() {
             <a href="#how-it-works" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">HOW IT WORKS?</a>
             <a href="#holdings" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">HOLDINGS</a>
             <a href="#mission" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">OUR MISSION</a>
-            <a href="#connect" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">CONNECT WALLET</a>
+            <div className="px-6 h-full flex items-center border-l border-gray-700">
+              <ConnectButton.Custom>
+                {({ account, chain, openAccountModal, openConnectModal, mounted }) => {
+                  const isConnected = mounted && account && chain
+                  
+                  return (
+                    <div
+                      {...(!mounted && {
+                        'aria-hidden': true,
+                        style: {
+                          opacity: 0,
+                          pointerEvents: 'none',
+                          userSelect: 'none',
+                        },
+                      })}
+                    >
+                      <button
+                        onClick={isConnected ? openAccountModal : openConnectModal}
+                        className="font-bold tracking-wider hover:text-gray-400 transition"
+                        style={{ background: 'none', border: 'none', padding: 0, outline: 'none' }}
+                      >
+                        {isConnected ? `${account.displayName}` : 'CONNECT WALLET'}
+                      </button>
+                    </div>
+                  )
+                }}
+              </ConnectButton.Custom>
+            </div>
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">
               <i className="fa-brands fa-x-twitter text-base"></i>
+            </a>
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">
+              <i className="fa-brands fa-x-discord text-base"></i>
             </a>
           </div>
 
@@ -79,10 +125,13 @@ export default function Dashboard() {
       {/* Hero Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight tracking-wider">
-            TURNING BASED PUNKS INTO<br />
-            A PERPETUAL MARKET MACHINE.
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-wider">
+            SPINNING THE BASED PUNKS<br />
+            FLYWHEEL.
           </h1>
+          <p className="text-base md:text-xl lg:text-2xl mb-8 tracking-wider font-medium" style={{ color: 'white', fontWeight: 500 }}>
+            TURNING FEES FROM $BASEDSTR INTO BUYING AND SELLING BASED PUNKS.
+          </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <button className="border border-white px-8 py-3 font-bold hover:bg-white hover:text-black transition flex items-center gap-2">
               BUY BASESTR <i className="fa-solid fa-arrow-up-right-from-square"></i>
@@ -99,23 +148,22 @@ export default function Dashboard() {
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-t border-dotted border-gray-700">
             {nfts.map((nft) => (
-              <div key={nft.id} className="relative group border-r border-b border-dotted border-gray-700">
+              <a key={nft.id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
                 <div className="absolute top-2 right-2 z-10">
-                  <button className="text-white group-hover:text-black text-xl transition-colors" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px' }}>
+                  <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px' }}>
                     ···
                   </button>
                 </div>
-                <div className="bg-black hover:bg-white transition-colors duration-300">
-                  <div className="bg-black group-hover:bg-white flex items-center justify-center py-6 transition-colors duration-300">
-                    {/* Pixel Art Placeholder - In production, use actual NFT images */}
-                    <div className="w-20 h-20 bg-white group-hover:bg-black rounded-full transition-colors duration-300"></div>
+                <div className="bg-black">
+                  <div className="flex items-center justify-center py-12">
+                    <img src={`/${nft.id}.png`} alt={nft.name} className="w-32 h-32 object-contain" />
                   </div>
-                  <div className="px-3 pb-3 text-center">
-                    <p className="text-m text-white group-hover:text-black transition-colors duration-300" style={{ fontWeight: 900 }}>BASED PUNK</p>
-                    <p className="text-sm text-gray-400 group-hover:text-black mt-1 font-extrabold transition-colors duration-300">#{nft.id}</p>
+                  <div className="px-3 pb-4 text-center">
+                    <p className="text-m text-white group-hover:text-gray-500 transition-colors duration-300" style={{ fontWeight: 900 }}>BASED PUNK</p>
+                    <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.id}</p>
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -126,25 +174,10 @@ export default function Dashboard() {
         <div className="max-w-[1400px] mx-auto">
           <div className="border overflow-x-auto md:overflow-visible scrollbar-hide" style={{ backgroundColor: '#0B0B0B', borderColor: '#1C1C1C', letterSpacing: '0.5px' }}>
             <div className="flex items-center h-16 min-w-max md:min-w-0">
-              <div className="px-5 h-full flex items-center font-bold border-r whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASESTRATEGY™</div>
-              <div className="px-16 h-full flex items-center border-r" style={{ borderColor: '#1C1C1C' }}></div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>CA</span> <span className="ml-2" style={{ color: 'white' }}>COMING SOON</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>M.CAP</span> <span className="ml-2" style={{ color: 'white' }}>$240K</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>PRICE</span> <span className="ml-2" style={{ color: 'white' }}>$0.00024</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>24H VOLUME</span> <span className="ml-2" style={{ color: 'white' }}>$2.4M</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>BURNED</span> <span className="ml-2" style={{ color: 'white' }}>0.4% (6.3M)</span>
-              </div>
-              <div className="px-5 h-full flex items-center font-bold gap-2 whitespace-nowrap" style={{ color: 'white', fontSize: '17px', letterSpacing: '0.5px' }}>
-                TRADE <i className="fa-solid fa-arrow-up-right-from-square"></i>
+              <div className="px-5 h-full flex items-center font-bold border-r whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASED STRATEGY</div>
+              <div className="flex-1"></div>
+              <div className="px-5 h-full flex items-center font-bold border-l whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
+                <span style={{ color: '#595959' }}>CA</span> <span className="ml-2" style={{ color: '#595959' }}>COMING SOON</span>
               </div>
             </div>
           </div>
@@ -160,8 +193,14 @@ export default function Dashboard() {
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <h2 className="text-2xl md:text-4xl tracking-wider font-extrabold" style={{ color: '#595959' }}>CURRENTLY<br />HOLDING</h2>
                 <div className="text-left md:text-right">
-                  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
-                  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>+ 32 NFTS</div>
+                  <div style={{ textAlign: 'left', lineHeight: '1.2' }}>
+                    <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>
+                      {loading ? 'LOADING...' : apiData?.contract_balance?.eth_balance_formatted === '0' ? 'NO ETH' : `${apiData?.contract_balance?.eth_balance_formatted} ETH`}
+                    </div>
+                    <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>
+                      {loading ? 'LOADING...' : apiData?.contract_balance?.nft_holdings === 0 ? 'NO NFTS' : `${apiData?.contract_balance?.nft_holdings} NFTS`}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -176,7 +215,9 @@ export default function Dashboard() {
               <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
                 <div className="w-full lg:w-[30%]">
                   <h2 className="text-2xl md:text-3xl mb-4 tracking-wider font-extrabold" style={{ color: '#595959' }}>WE ARE BUYING NEXT</h2>
-                  <div className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
+                  <div className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>
+                    {loading ? 'LOADING...' : apiData?.nft?.price?.amount_formatted ? `${apiData.nft.price.amount_formatted} ETH` : '0.072 ETH'}
+                  </div>
                   
                   {/* Progress Bar - 5 rows x 20 boxes */}
                   <div className="mb-8">
@@ -205,7 +246,7 @@ export default function Dashboard() {
                   {/* Owner and Button */}
                   <div className="flex flex-col sm:flex-row gap-3">
                     <div className="border px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: '#595959' }}>
-                      OWNER <span style={{ color: 'white' }}>0XM0FA...6066</span>
+                      OWNER <span style={{ color: 'white' }}>{loading ? 'LOADING...' : apiData?.nft?.owner_address ? `${apiData.nft.owner_address.slice(0, 6)}...${apiData.nft.owner_address.slice(-4)}` : '0XM0FA...6066'}</span>
                     </div>
                     <button className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: 'white' }}>
                       VIEW ON MARKETPLACE
@@ -215,8 +256,14 @@ export default function Dashboard() {
 
                 {/* NFT Preview */}
                 <div className="flex justify-center lg:justify-end w-full lg:flex-1 mt-8 lg:mt-0">
-                  <div className="w-64 h-72 md:w-72 md:h-80 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C1C1C' }}>
-                    <div className="w-48 h-48 md:w-56 md:h-56 bg-white rounded-full opacity-90"></div>
+                  <div className="flex items-center justify-center">
+                    {loading ? (
+                      <div className="text-white">LOADING...</div>
+                    ) : apiData?.nft?.image_url ? (
+                      <img src={apiData.nft.image_url} alt={apiData.nft.name || 'NFT'} className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain" />
+                    ) : (
+                      <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-white rounded-full opacity-90"></div>
+                    )}
                   </div>
                 </div>
               </div>
