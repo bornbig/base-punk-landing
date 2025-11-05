@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { fetchBestListing, type BasedPunksAPIResponse } from '@/lib/api'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 export default function Dashboard() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
@@ -59,9 +60,39 @@ export default function Dashboard() {
             <a href="#how-it-works" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">HOW IT WORKS?</a>
             <a href="#holdings" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">HOLDINGS</a>
             <a href="#mission" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">OUR MISSION</a>
-            <a href="#connect" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">CONNECT WALLET</a>
+            <div className="px-6 h-full flex items-center border-l border-gray-700">
+              <ConnectButton.Custom>
+                {({ account, chain, openAccountModal, openConnectModal, mounted }) => {
+                  const isConnected = mounted && account && chain
+                  
+                  return (
+                    <div
+                      {...(!mounted && {
+                        'aria-hidden': true,
+                        style: {
+                          opacity: 0,
+                          pointerEvents: 'none',
+                          userSelect: 'none',
+                        },
+                      })}
+                    >
+                      <button
+                        onClick={isConnected ? openAccountModal : openConnectModal}
+                        className="font-bold tracking-wider hover:text-gray-400 transition"
+                        style={{ background: 'none', border: 'none', padding: 0, outline: 'none' }}
+                      >
+                        {isConnected ? `${account.displayName}` : 'CONNECT WALLET'}
+                      </button>
+                    </div>
+                  )
+                }}
+              </ConnectButton.Custom>
+            </div>
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">
               <i className="fa-brands fa-x-twitter text-base"></i>
+            </a>
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">
+              <i className="fa-brands fa-x-discord text-base"></i>
             </a>
           </div>
 

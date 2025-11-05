@@ -1,0 +1,74 @@
+/* Import RainbowKit base styles */
+@import '@rainbow-me/rainbowkit/styles.css';
+
+/* Scope ALL RainbowKit styles to only affect elements with data-rk attribute */
+/* This prevents RainbowKit from affecting your page components */
+
+div[data-rk] {
+  --rk-fonts-body: 'Doto', sans-serif !important;
+}
+
+div[data-rk] div[role="dialog"] {
+  background: #0B0B0B !important;
+  border: 1px solid #2B2B2B !important;
+  border-radius: 0 !important;
+  font-family: 'Doto', sans-serif !important;
+}
+
+/* All containers inside dialog */
+div[data-rk] div[role="dialog"] > div,
+div[data-rk] div[role="dialog"] > div > div {
+  background: #0B0B0B !important;
+}
+
+div[data-rk] div[role="dialog"] * {
+  font-family: 'Doto', sans-serif !important;
+}
+
+/* Wallet buttons - remove borders */
+div[data-rk] button[role="menuitem"] {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Show wallet icons always */
+div[data-rk] button[role="menuitem"] img {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force all text in dialog to be white */
+div[data-rk] div[role="dialog"] {
+  color: white !important;
+}
+
+div[data-rk] div[role="dialog"] * {
+  color: white !important;
+}
+
+/* Account modal buttons - ONLY inside the dialog */
+div[data-rk] div[role="dialog"] button:not([aria-label="Close"]) {
+  background: #0B0B0B !important;
+  border: 1px solid #2B2B2B !important;
+  border-radius: 0 !important;
+  color: white !important;
+  font-weight: bold !important;
+  letter-spacing: 0.1em !important;
+}
+
+div[data-rk] div[role="dialog"] button:not([aria-label="Close"]):hover {
+  background: #1C1C1C !important;
+}
+
+/* Close button - transparent background */
+div[data-rk] div[role="dialog"] button[aria-label="Close"] {
+  color: white !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Modal backdrop */
+div[data-rk] > div:first-child {
+  background: rgba(0, 0, 0, 0.95) !important;
+}
