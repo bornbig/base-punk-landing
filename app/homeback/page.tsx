@@ -34,7 +34,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between h-12">
           <div className="flex items-center h-full">
             <div className="pl-6 pr-6 h-full flex items-center text-base font-bold tracking-wider border-r border-gray-700">
-              BASEDSTR
+              BASED STRATEGY
             </div>
           </div>
           
@@ -79,10 +79,13 @@ export default function Dashboard() {
       {/* Hero Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight tracking-wider">
-            TURNING BASED PUNKS INTO<br />
-            A PERPETUAL MARKET MACHINE.
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-wider">
+            SPINNING THE BASED PUNKS<br />
+            FLYWHEEL.
           </h1>
+          <p className="text-base md:text-xl lg:text-2xl mb-8 tracking-wider font-medium" style={{ color: 'white', fontWeight: 500 }}>
+            TURNING FEES FROM $BASEDSTR INTO BUYING AND SELLING BASED PUNKS.
+          </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <button className="border border-white px-8 py-3 font-bold hover:bg-white hover:text-black transition flex items-center gap-2">
               BUY BASESTR <i className="fa-solid fa-arrow-up-right-from-square"></i>
@@ -126,25 +129,10 @@ export default function Dashboard() {
         <div className="max-w-[1400px] mx-auto">
           <div className="border overflow-x-auto md:overflow-visible scrollbar-hide" style={{ backgroundColor: '#0B0B0B', borderColor: '#1C1C1C', letterSpacing: '0.5px' }}>
             <div className="flex items-center h-16 min-w-max md:min-w-0">
-              <div className="px-5 h-full flex items-center font-bold border-r whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASESTRATEGY™</div>
-              <div className="px-16 h-full flex items-center border-r" style={{ borderColor: '#1C1C1C' }}></div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>CA</span> <span className="ml-2" style={{ color: 'white' }}>COMING SOON</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>M.CAP</span> <span className="ml-2" style={{ color: 'white' }}>$240K</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>PRICE</span> <span className="ml-2" style={{ color: 'white' }}>$0.00024</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>24H VOLUME</span> <span className="ml-2" style={{ color: 'white' }}>$2.4M</span>
-              </div>
-              <div className="px-5 h-full flex items-center border-r font-bold whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
-                <span style={{ color: '#595959' }}>BURNED</span> <span className="ml-2" style={{ color: 'white' }}>0.4% (6.3M)</span>
-              </div>
-              <div className="px-5 h-full flex items-center font-bold gap-2 whitespace-nowrap" style={{ color: 'white', fontSize: '17px', letterSpacing: '0.5px' }}>
-                TRADE <i className="fa-solid fa-arrow-up-right-from-square"></i>
+              <div className="px-5 h-full flex items-center font-bold border-r whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '18px', letterSpacing: '1px' }}>BASED STRATEGY</div>
+              <div className="flex-1"></div>
+              <div className="px-5 h-full flex items-center font-bold border-l whitespace-nowrap" style={{ borderColor: '#1C1C1C', fontSize: '15px', letterSpacing: '0.5px' }}>
+                <span style={{ color: '#595959' }}>CA</span> <span className="ml-2" style={{ color: '#595959' }}>COMING SOON</span>
               </div>
             </div>
           </div>
@@ -160,9 +148,11 @@ export default function Dashboard() {
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <h2 className="text-2xl md:text-4xl tracking-wider font-extrabold" style={{ color: '#595959' }}>CURRENTLY<br />HOLDING</h2>
                 <div className="text-left md:text-right">
-                  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
-                  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>+ 32 NFTS</div>
-                </div>
+                  <div style={{ textAlign: 'left', lineHeight: '1.2' }}>
+  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>NO ETH</div>
+  <div className="text-3xl md:text-5xl tracking-wider" style={{ color: 'white', fontWeight: 400 }}>NO NFTS</div>
+</div>
+ </div>
               </div>
             </div>
 
@@ -176,7 +166,7 @@ export default function Dashboard() {
               <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
                 <div className="w-full lg:w-[30%]">
                   <h2 className="text-2xl md:text-3xl mb-4 tracking-wider font-extrabold" style={{ color: '#595959' }}>WE ARE BUYING NEXT</h2>
-                  <div className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>6.9432 ETH</div>
+                  <div className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>0.072 ETH</div>
                   
                   {/* Progress Bar - 5 rows x 20 boxes */}
                   <div className="mb-8">
