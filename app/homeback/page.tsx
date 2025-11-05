@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react'
 import { fetchBestListing, type BasedPunksAPIResponse } from '@/lib/api'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
+// Force dynamic rendering - no caching
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function Dashboard() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
