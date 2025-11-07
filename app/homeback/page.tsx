@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { fetchBestListing, type BasedPunksAPIResponse } from '@/lib/api'
+import { fetchBestListing, fetchCurrentHoldings, type BasedPunksAPIResponse, type CurrentHoldingsResponse } from '@/lib/api'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 // Force dynamic rendering - no caching
@@ -12,12 +12,17 @@ export default function Dashboard() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [apiData, setApiData] = useState<BasedPunksAPIResponse | null>(null)
+  const [holdingsData, setHoldingsData] = useState<CurrentHoldingsResponse | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchBestListing()
-      .then(data => {
-        setApiData(data)
+    Promise.all([
+      fetchBestListing(),
+      fetchCurrentHoldings()
+    ])
+      .then(([bestListing, holdings]) => {
+        setApiData(bestListing)
+        setHoldingsData(holdings)
         setLoading(false)
       })
       .catch(err => {
@@ -151,24 +156,62 @@ export default function Dashboard() {
       <section className="px-6 py-12 bg-black">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-t border-dotted border-gray-700">
-            {nfts.map((nft) => (
-              <a key={nft.id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
-                <div className="absolute top-2 right-2 z-10">
-                  <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px' }}>
-                    ···
-                  </button>
-                </div>
-                <div className="bg-black">
-                  <div className="flex items-center justify-center py-12">
-                    <img src={`/${nft.id}.png`} alt={nft.name} className="w-32 h-32 object-contain" />
-                  </div>
-                  <div className="px-3 pb-4 text-center">
-                    <p className="text-m text-white group-hover:text-gray-500 transition-colors duration-300" style={{ fontWeight: 900 }}>BASED PUNK</p>
-                    <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.id}</p>
+            {loading ? (
+              // Show loading state
+              Array.from({ length: 10 }).map((_, index) => (
+                <div key={index} className="relative border-r border-b border-dotted border-gray-700">
+                  <div className="bg-black">
+                    <div className="flex items-center justify-center py-12">
+                      <div className="w-32 h-32 animate-pulse" style={{ backgroundColor: 'rgb(55, 65, 81)' }}></div>
+                    </div>
+                    <div className="px-3 pb-4 text-center">
+                      <div className="h-4 animate-pulse mb-2" style={{ backgroundColor: 'rgb(55, 65, 81)' }}></div>
+                      <div className="h-3 animate-pulse" style={{ backgroundColor: 'rgb(55, 65, 81)' }}></div>
+                    </div>
                   </div>
                 </div>
-              </a>
-            ))}
+              ))
+            ) : holdingsData && holdingsData.items.length > 0 ? (
+              // Show actual NFTs from API
+              holdingsData.items.map((nft) => (
+                <a key={nft.token_id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
+                  <div className="absolute top-2 right-2 z-10">
+                    <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
+                      ···
+                    </button>
+                  </div>
+                  <div className="bg-black">
+                    <div className="flex items-center justify-center py-12">
+                      <img src={nft.image_url} alt={nft.name} className="w-32 h-32 object-contain" />
+                    </div>
+                    <div className="px-3 pb-4 text-center">
+                      <p className="text-m text-white group-hover:text-gray-500 transition-colors duration-300" style={{ fontWeight: 900 }}>{nft.collection_name.toUpperCase()}</p>
+                      <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.token_id}</p>
+                    </div>
+                  </div>
+                </a>
+              ))
+            ) : (
+              // Show placeholder when no NFTs
+              nfts.map((nft) => (
+                <a key={nft.id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
+                  <div className="absolute top-2 right-2 z-10">
+                    <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
+                      ···
+                    </button>
+                  </div>
+                  <div className="bg-black">
+                    <div className="flex items-center justify-center py-12">
+                      <img src={`/${nft.id}.png`} alt={nft.name} className="w-32 h-32 object-contain" />
+                    </div>
+                    <div className="px-3 pb-4 text-center">
+                      <p className="text-m text-white group-hover:text-gray-500 transition-colors duration-300" style={{ fontWeight: 900 }}>BASED PUNK</p>
+                      <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.id}</p>
+                    </div>
+                  </div>
+                </a>
+              ))
+            )}
           </div>
         </div>
       </section>
