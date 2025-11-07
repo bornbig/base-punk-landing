@@ -28,8 +28,49 @@ export interface BasedPunksAPIResponse {
 
 const API_BASE_URL = 'https://based-str-be-production.up.railway.app'
 
+export interface HoldingNFT {
+  image_url: string
+  animated_url: string | null
+  token_id: string
+  name: string
+  collection_name: string
+}
+
+export interface CurrentHoldingsResponse {
+  items: HoldingNFT[]
+  totalCount: number
+  totalValue: {
+    wei: string
+    eth: number
+  }
+  next: string | null
+}
+
 export async function fetchBestListing(): Promise<BasedPunksAPIResponse> {
-  const response = await fetch(`${API_BASE_URL}/v1/opensea/best-listing/basedpunks`)
+  // Use absolute URL for SSR compatibility
+  const baseUrl = typeof window === 'undefined' 
+    ? 'http://localhost:3000' 
+    : ''
+  
+  const response = await fetch(`${baseUrl}/api/best-listing`, {
+    cache: 'no-store',
+  })
+  
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.status}`)
+  }
+  
+  return response.json()
+}
+
+export async function fetchCurrentHoldings(): Promise<CurrentHoldingsResponse> {
+  const baseUrl = typeof window === 'undefined' 
+    ? 'http://localhost:3000' 
+    : ''
+  
+  const response = await fetch(`${baseUrl}/api/current-holdings`, {
+    cache: 'no-store',
+  })
   
   if (!response.ok) {
     throw new Error(`API request failed: ${response.status}`)
