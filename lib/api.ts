@@ -26,16 +26,23 @@ export interface BasedPunksAPIResponse {
   contract_balance: ContractBalance
 }
 
-export interface HoldingNFT {
-  image_url: string
-  animated_url: string | null
-  token_id: string
+export interface HoldingNFTData {
   name: string
-  collection_name: string
+  imageUrl: string
+  animationUrl: string
+}
+
+export interface HoldingItem {
+  tokenId: number
+  purchasePriceWei: string
+  listPriceWei: string
+  lastEventBlock: string
+  nft: HoldingNFTData
+  metaStatus: string
 }
 
 export interface CurrentHoldingsResponse {
-  items: HoldingNFT[]
+  items: HoldingItem[]
   totalCount: number
   totalValue: {
     wei: string

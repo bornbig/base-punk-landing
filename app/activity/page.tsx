@@ -305,8 +305,8 @@ export default function ActivityPage() {
               ))
             ) : holdingsData && holdingsData.items.length > 0 ? (
               // Show actual NFTs from holdings API (limit to 20)
-              holdingsData.items.slice(0, 20).map((nft) => (
-                <a key={nft.token_id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
+              holdingsData.items.slice(0, 20).map((item) => (
+                <a key={item.tokenId} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
                   <div className="absolute top-2 right-2 z-10">
                     <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
                       ···
@@ -314,11 +314,11 @@ export default function ActivityPage() {
                   </div>
                   <div className="bg-black">
                     <div className="flex items-center justify-center py-12">
-                      <img src={nft.image_url} alt={nft.name} className="w-32 h-32 object-contain" />
+                      <img src={item.nft.imageUrl} alt={item.nft.name} className="w-32 h-32 object-contain" />
                     </div>
                     <div className="px-3 pb-4 text-center">
                       <p className="text-m text-white group-hover:text-gray-500 transition-colors duration-300" style={{ fontWeight: 900 }}>BASED PUNK</p>
-                      <p className="text-sm text-gray-400 mt-1 font-extrabold">#{nft.token_id}</p>
+                      <p className="text-sm text-gray-400 mt-1 font-extrabold">#{item.tokenId}</p>
                     </div>
                   </div>
                 </a>
