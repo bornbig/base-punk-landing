@@ -26,8 +26,6 @@ export interface BasedPunksAPIResponse {
   contract_balance: ContractBalance
 }
 
-const API_BASE_URL = 'https://based-str-be-production.up.railway.app'
-
 export interface HoldingNFT {
   image_url: string
   animated_url: string | null
@@ -46,8 +44,32 @@ export interface CurrentHoldingsResponse {
   next: string | null
 }
 
+export interface SaleNFT {
+  name: string
+  imageUrl: string
+  animationUrl: string
+}
+
+export interface SaleItem {
+  tokenId: number
+  salePriceWei: string
+  buyer: string
+  soldAtBlock: string
+  nft: SaleNFT
+  metaStatus: string
+}
+
+export interface SalesResponse {
+  items: SaleItem[]
+  stats: {
+    wei: string
+    eth: number
+    soldCount: number
+  }
+  next: string | null
+}
+
 export async function fetchBestListing(): Promise<BasedPunksAPIResponse> {
-  // Use absolute URL for SSR compatibility
   const baseUrl = typeof window === 'undefined' 
     ? 'http://localhost:3000' 
     : ''
@@ -69,6 +91,22 @@ export async function fetchCurrentHoldings(): Promise<CurrentHoldingsResponse> {
     : ''
   
   const response = await fetch(`${baseUrl}/api/current-holdings`, {
+    cache: 'no-store',
+  })
+  
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.status}`)
+  }
+  
+  return response.json()
+}
+
+export async function fetchSales(): Promise<SalesResponse> {
+  const baseUrl = typeof window === 'undefined' 
+    ? 'http://localhost:3000' 
+    : ''
+  
+  const response = await fetch(`${baseUrl}/api/sales`, {
     cache: 'no-store',
   })
   
