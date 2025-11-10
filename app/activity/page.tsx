@@ -287,11 +287,11 @@ export default function ActivityPage() {
       {/* NFT Gallery - 20 items (Current Holdings) */}
       <section className="px-6 py-12 bg-black">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-t border-dotted border-gray-700">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-dotted border-gray-700">
             {holdingsLoading ? (
               // Show loading state
               Array.from({ length: 20 }).map((_, index) => (
-                <div key={index} className="relative border-r border-b border-dotted border-gray-700">
+                <div key={index} className="relative border-r border-b border-t border-dotted border-gray-700">
                   <div className="bg-black">
                     <div className="flex items-center justify-center py-12">
                       <div className="w-32 h-32 animate-pulse" style={{ backgroundColor: 'rgb(55, 65, 81)' }}></div>
@@ -306,7 +306,7 @@ export default function ActivityPage() {
             ) : holdingsData && holdingsData.items.length > 0 ? (
               // Show actual NFTs from holdings API (limit to 20)
               holdingsData.items.slice(0, 20).map((item) => (
-                <a key={item.tokenId} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
+                <a key={item.tokenId} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-t border-dotted border-gray-700 block">
                   <div className="absolute top-2 right-2 z-10">
                     <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
                       ···
@@ -326,7 +326,7 @@ export default function ActivityPage() {
             ) : (
               // Show placeholder NFTs when no data
               placeholderNfts.map((nft) => (
-                <a key={nft.id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
+                <a key={nft.id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-t border-dotted border-gray-700 block">
                   <div className="absolute top-2 right-2 z-10">
                     <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
                       ···
@@ -385,11 +385,11 @@ export default function ActivityPage() {
       {/* Second NFT Gallery - Sales Data (20 items) */}
       <section className="px-6 py-12 bg-black">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-t border-dotted border-gray-700">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-l border-dotted border-gray-700">
             {salesLoading ? (
               // Show loading state
               Array.from({ length: 20 }).map((_, index) => (
-                <div key={`second-${index}`} className="relative border-r border-b border-dotted border-gray-700">
+                <div key={`second-${index}`} className="relative border-r border-b border-t border-dotted border-gray-700">
                   <div className="bg-black">
                     <div className="flex items-center justify-center py-12">
                       <div className="w-32 h-32 animate-pulse" style={{ backgroundColor: 'rgb(55, 65, 81)' }}></div>
@@ -404,7 +404,7 @@ export default function ActivityPage() {
             ) : salesData && salesData.items.length > 0 ? (
               // Show actual NFTs from sales API (limit to 20)
               salesData.items.slice(0, 20).map((sale) => (
-                <a key={sale.tokenId} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
+                <a key={sale.tokenId} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-t border-dotted border-gray-700 block">
                   <div className="absolute top-2 right-2 z-10">
                     <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
                       ···
@@ -427,7 +427,7 @@ export default function ActivityPage() {
                 id: i + 21,
                 name: `BASED PUNK #${i + 21}`
               })).map((nft) => (
-                <a key={nft.id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-dotted border-gray-700 block">
+                <a key={nft.id} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-t border-dotted border-gray-700 block">
                   <div className="absolute top-2 right-2 z-10">
                     <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
                       ···
