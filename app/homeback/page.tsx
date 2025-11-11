@@ -252,9 +252,15 @@ export default function Dashboard() {
                     <div className="border px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: '#595959' }}>
                       OWNER <span style={{ color: 'white' }}>{loading ? 'LOADING...' : apiData?.nft?.owner_address ? `${apiData.nft.owner_address.slice(0, 6)}...${apiData.nft.owner_address.slice(-4)}` : '0XM0FA...6066'}</span>
                     </div>
-                    <button className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: 'white' }}>
+                    <a 
+                      href={apiData?.nft?.marketplace_url || 'https://opensea.io/collection/basedpunks'} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center block" 
+                      style={{ borderColor: '#2B2B2B', color: 'white' }}
+                    >
                       VIEW ON MARKETPLACE
-                    </button>
+                    </a>
                   </div>
                 </div>
 

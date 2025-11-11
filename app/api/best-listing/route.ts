@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const API_BASE_URL = 'https://based-str-be-production.up.railway.app'
+const API_BASE_URL = 'https://based-str-be-staging.up.railway.app'
 
 export async function GET() {
   try {
