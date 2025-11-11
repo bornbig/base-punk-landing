@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { fetchBestListing, fetchCurrentHoldings, fetchSales, type BasedPunksAPIResponse, type CurrentHoldingsResponse, type SalesResponse } from '@/lib/api'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import BuyPunkModal from '@/components/BuyPunkModal'
 
 // Force dynamic rendering - no caching
 export const dynamic = 'force-dynamic'
@@ -17,6 +18,14 @@ export default function ActivityPage() {
   const [loading, setLoading] = useState(true)
   const [holdingsLoading, setHoldingsLoading] = useState(true)
   const [salesLoading, setSalesLoading] = useState(true)
+  const [selectedNFT, setSelectedNFT] = useState<{
+    tokenId: number
+    imageUrl: string
+    name: string
+    listPriceWei: string
+    marketplaceUrl?: string
+  } | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     // Fetch best listing for stats
@@ -239,9 +248,15 @@ export default function ActivityPage() {
                     <div className="border px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: '#595959' }}>
                       OWNER <span style={{ color: 'white' }}>{loading ? 'LOADING...' : apiData?.nft?.owner_address ? `${apiData.nft.owner_address.slice(0, 6)}...${apiData.nft.owner_address.slice(-4)}` : '0XM0FA...6066'}</span>
                     </div>
-                    <button className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: 'white' }}>
+                    <a 
+                      href={apiData?.nft?.marketplace_url || 'https://opensea.io/collection/basedpunks'} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center block" 
+                      style={{ borderColor: '#2B2B2B', color: 'white' }}
+                    >
                       VIEW ON MARKETPLACE
-                    </button>
+                    </a>
                   </div>
                 </div>
 
@@ -306,7 +321,19 @@ export default function ActivityPage() {
             ) : holdingsData && holdingsData.items.length > 0 ? (
               // Show actual NFTs from holdings API (limit to 20)
               holdingsData.items.slice(0, 20).map((item) => (
-                <a key={item.tokenId} href="https://based.so/punks" target="_blank" rel="noopener noreferrer" className="relative group border-r border-b border-t border-dotted border-gray-700 block">
+                <div 
+                  key={item.tokenId} 
+                  onClick={() => {
+                    setSelectedNFT({
+                      tokenId: item.tokenId,
+                      imageUrl: item.nft.imageUrl,
+                      name: item.nft.name,
+                      listPriceWei: item.listPriceWei,
+                      marketplaceUrl: `https://opensea.io/assets/base/0xcb28749c24af4797808364d71d71539bc01e76d4/${item.tokenId}`
+                    })
+                    setIsModalOpen(true)
+                  }}
+                  className="relative group border-r border-b border-t border-dotted border-gray-700 block cursor-pointer">
                   <div className="absolute top-2 right-2 z-10">
                     <button className="text-white text-xl" style={{ fontWeight: 300, fontFamily: 'sans-serif', letterSpacing: '2px', outline: 'none', border: 'none', background: 'none', padding: 0 }}>
                       ···
@@ -321,7 +348,7 @@ export default function ActivityPage() {
                       <p className="text-sm text-gray-400 mt-1 font-extrabold">#{item.tokenId}</p>
                     </div>
                   </div>
-                </a>
+                </div>
               ))
             ) : (
               // Show placeholder NFTs when no data
@@ -517,6 +544,14 @@ export default function ActivityPage() {
           </div>
         </div>
       </section>
+
+      {/* Buy Punk Modal */}
+      <BuyPunkModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        nftData={selectedNFT}
+        userBalance="0.1" // TODO: Get actual user balance from wallet
+      />
     </div>
   )
 }

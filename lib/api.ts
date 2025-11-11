@@ -11,6 +11,7 @@ export interface NFTData {
   token_id: string
   name: string
   owner_address: string
+  marketplace_url: string
   price: NFTPrice
 }
 
@@ -62,6 +63,7 @@ export interface SaleItem {
   salePriceWei: string
   buyer: string
   soldAtBlock: string
+  purchasePriceWei: string
   nft: SaleNFT
   metaStatus: string
 }
