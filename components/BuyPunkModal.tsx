@@ -142,28 +142,20 @@ export default function BuyPunkModal({ isOpen, onClose, nftData, userBalance = '
                     {priceInEth} ETH
                   </p>
 
-                  {modalState === 'insufficient' && (
-                    <p className="text-red-400 text-sm mt-3 tracking-wide">
-                      YOU NEED {ethNeeded} ETH MORE + GAS TO FINISH THE PURCHASE
-                    </p>
-                  )}
+
                 </div>
 
                 {/* Buttons at bottom */}
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={handleBuyNow}
-                    disabled={modalState === 'insufficient' || isLoading}
-                    className={`px-6 py-3 text-sm tracking-wider font-extrabold transition ${modalState === 'insufficient' || isLoading
+                    disabled={isLoading}
+                    className={`px-6 py-3 text-sm tracking-wider font-extrabold transition ${isLoading
                       ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                       : 'bg-white text-black hover:bg-gray-200'
                       }`}
                   >
-                    {modalState === 'insufficient'
-                      ? 'INSUFFICIENT FUNDS'
-                      : isLoading
-                        ? 'PROCESSING...'
-                        : 'BUY NOW!'}
+                    {isLoading ? 'PROCESSING...' : 'BUY NOW!'}
                   </button>
 
                   <a
