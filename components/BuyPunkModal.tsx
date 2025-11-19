@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi'
+import { STRATEGY_ABI, STRATEGY_CONTRACT_ADDRESS } from '@/lib/abi'
+import { parseEther } from 'viem'
 
 interface BuyPunkModalProps {
   isOpen: boolean
@@ -16,8 +19,14 @@ interface BuyPunkModalProps {
 }
 
 export default function BuyPunkModal({ isOpen, onClose, nftData, userBalance = '0' }: BuyPunkModalProps) {
+  const { address } = useAccount()
+  const { data: hash, error: writeError, isPending: isWritePending, writeContract } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  })
+
   const [modalState, setModalState] = useState<'default' | 'insufficient' | 'success'>('default')
-  const [txHash, setTxHash] = useState<string>('')
+  const [txHash, setTxHash] = useState('')
 
   // Convert Wei to ETH
   const priceInEth = nftData ? (parseInt(nftData.listPriceWei) / 1e18).toFixed(4) : '0'
@@ -36,48 +45,61 @@ export default function BuyPunkModal({ isOpen, onClose, nftData, userBalance = '
     }
   }, [isOpen, hasInsufficientFunds])
 
-  const handleBuyNow = async () => {
-    // TODO: Implement smart contract purchase logic
-    // For now, simulate success
-    console.log('Buying NFT:', nftData)
-    
-    // Simulate transaction
-    setTimeout(() => {
-      setTxHash('0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef')
+  useEffect(() => {
+    if (isConfirmed) {
+      setTxHash(hash || '')
       setModalState('success')
-    }, 2000)
+    }
+  }, [isConfirmed, hash])
+
+  const handleBuyNow = async () => {
+    if (!nftData) return
+
+    try {
+      writeContract({
+        address: STRATEGY_CONTRACT_ADDRESS,
+        abi: STRATEGY_ABI,
+        functionName: 'sellTargetNFT',
+        args: [BigInt(nftData.tokenId)],
+        value: BigInt(nftData.listPriceWei),
+      })
+    } catch (error) {
+      console.error('Transaction failed:', error)
+    }
   }
+
+  const isLoading = isWritePending || isConfirming
 
   if (!isOpen || !nftData) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80" onClick={onClose}>
-      <div 
+      <div
         className="relative bg-black border border-gray-700 w-full max-w-4xl mx-4"
         onClick={(e) => e.stopPropagation()}
       >
         {modalState === 'success' ? (
           // Success State
           <div className="p-8 md:p-12">
-            <button 
+            <button
               onClick={onClose}
               className="absolute top-4 right-4 text-white text-2xl hover:text-gray-400 transition"
               style={{ fontFamily: "'Doto', sans-serif", fontWeight: 900 }}
             >
               X
             </button>
-            
+
             <h2 className="text-center text-xl md:text-2xl mb-8 tracking-wider font-bold text-gray-400">
               YOUR PURCHASE IS COMPLETE
             </h2>
 
             <div className="flex flex-col items-center">
-              <img 
-                src={nftData.imageUrl} 
+              <img
+                src={nftData.imageUrl}
                 alt={nftData.name}
                 className="w-64 h-64 object-contain mb-6"
               />
-              
+
               <p className="text-white text-lg mb-8 tracking-wider">
                 PUNK #{nftData.tokenId}
               </p>
@@ -100,7 +122,7 @@ export default function BuyPunkModal({ isOpen, onClose, nftData, userBalance = '
               <h2 className="text-center text-xl md:text-3xl tracking-wider text-gray-400 pr-8" style={{ fontWeight: 800 }}>
                 BUY PUNK FROM BASEDSTR VAULT
               </h2>
-              <button 
+              <button
                 onClick={onClose}
                 className="absolute -top-2 right-0 text-white text-xl md:text-2xl hover:text-gray-400 transition"
                 style={{ fontFamily: "'Doto', sans-serif", fontWeight: 800 }}
@@ -129,33 +151,36 @@ export default function BuyPunkModal({ isOpen, onClose, nftData, userBalance = '
 
                 {/* Buttons at bottom */}
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={handleBuyNow}
-                disabled={modalState === 'insufficient'}
-                className={`px-6 py-3 text-sm tracking-wider font-extrabold transition ${
-                  modalState === 'insufficient'
-                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                    : 'bg-white text-black hover:bg-gray-200'
-                }`}
-              >
-                {modalState === 'insufficient' ? 'INSUFFICIENT FUNDS' : 'BUY NOW!'}
-              </button>
-              
-              <a
-                href={nftData.marketplaceUrl || `https://opensea.io/assets/base/0xcb28749c24af4797808364d71d71539bc01e76d4/${nftData.tokenId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 text-sm tracking-wider font-extrabold border border-white text-white hover:bg-gray-900 transition text-center"
-              >
-                VIEW ON MARKETPLACE
-              </a>
+                  <button
+                    onClick={handleBuyNow}
+                    disabled={modalState === 'insufficient' || isLoading}
+                    className={`px-6 py-3 text-sm tracking-wider font-extrabold transition ${modalState === 'insufficient' || isLoading
+                      ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                      : 'bg-white text-black hover:bg-gray-200'
+                      }`}
+                  >
+                    {modalState === 'insufficient'
+                      ? 'INSUFFICIENT FUNDS'
+                      : isLoading
+                        ? 'PROCESSING...'
+                        : 'BUY NOW!'}
+                  </button>
+
+                  <a
+                    href={nftData.marketplaceUrl || `https://opensea.io/assets/base/0xcb28749c24af4797808364d71d71539bc01e76d4/${nftData.tokenId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 text-sm tracking-wider font-extrabold border border-white text-white hover:bg-gray-900 transition text-center"
+                  >
+                    VIEW ON MARKETPLACE
+                  </a>
                 </div>
               </div>
 
               {/* Right side - NFT Image */}
               <div className="flex-1 flex items-center justify-center">
-                <img 
-                  src={nftData.imageUrl} 
+                <img
+                  src={nftData.imageUrl}
                   alt={nftData.name}
                   className="w-full max-w-sm h-auto object-contain"
                 />

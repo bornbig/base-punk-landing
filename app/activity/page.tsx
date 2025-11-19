@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { fetchBestListing, fetchCurrentHoldings, fetchSales, type BasedPunksAPIResponse, type CurrentHoldingsResponse, type SalesResponse } from '@/lib/api'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useAccount, useBalance } from 'wagmi'
 import BuyPunkModal from '@/components/BuyPunkModal'
 
 // Force dynamic rendering - no caching
@@ -26,6 +27,11 @@ export default function ActivityPage() {
     marketplaceUrl?: string
   } | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const { address } = useAccount()
+  const { data: balanceData } = useBalance({
+    address,
+  })
 
   useEffect(() => {
     // Fetch best listing for stats
@@ -85,7 +91,7 @@ export default function ActivityPage() {
               BASED STRATEGY
             </a>
           </div>
-          
+
           {/* Desktop Menu - Right aligned */}
           <div className="hidden md:flex items-center h-full text-base font-bold ml-auto">
             <a href="/homeback#buy-sell" className="px-6 h-full flex items-center border-l border-gray-700 hover:bg-gray-900 transition">BUY/SELL</a>
@@ -96,7 +102,7 @@ export default function ActivityPage() {
               <ConnectButton.Custom>
                 {({ account, chain, openAccountModal, openConnectModal, mounted }) => {
                   const isConnected = mounted && account && chain
-                  
+
                   return (
                     <div
                       {...(!mounted && {
@@ -129,7 +135,7 @@ export default function ActivityPage() {
           </div>
 
           {/* Mobile Burger Menu */}
-          <button 
+          <button
             className="md:hidden px-6 h-full flex items-center border-l border-gray-700"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
@@ -138,10 +144,9 @@ export default function ActivityPage() {
         </div>
 
         {/* Mobile Menu Dropdown */}
-        <div 
-          className={`md:hidden absolute top-full left-0 right-0 bg-black border-b border-gray-700 z-50 overflow-hidden transition-all duration-300 ease-in-out ${
-            mobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 border-b-0'
-          }`}
+        <div
+          className={`md:hidden absolute top-full left-0 right-0 bg-black border-b border-gray-700 z-50 overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 border-b-0'
+            }`}
         >
           <a href="/homeback#buy-sell" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>BUY/SELL</a>
           <a href="/homeback#how-it-works" className="block px-6 py-4 border-b border-gray-700 hover:bg-gray-900 transition-colors font-bold tracking-wider" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS?</a>
@@ -218,7 +223,7 @@ export default function ActivityPage() {
                   <div className="text-3xl md:text-5xl mb-8 md:mb-12 tracking-wider" style={{ color: 'white', fontWeight: 400 }}>
                     {loading ? 'LOADING...' : apiData?.nft?.price?.amount_formatted ? `${apiData.nft.price.amount_formatted} ETH` : '0.072 ETH'}
                   </div>
-                  
+
                   {/* Progress Bar - 5 rows x 20 boxes */}
                   <div className="mb-8">
                     <div className="space-y-3 mb-3">
@@ -227,8 +232,8 @@ export default function ActivityPage() {
                           {[...Array(20)].map((_, colIndex) => (
                             <div
                               key={colIndex}
-                              style={{ 
-                                width: '8px', 
+                              style={{
+                                width: '8px',
                                 height: '8px',
                                 backgroundColor: rowIndex === 0 ? 'white' : '#202020'
                               }}
@@ -248,11 +253,11 @@ export default function ActivityPage() {
                     <div className="border px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center" style={{ borderColor: '#2B2B2B', color: '#595959' }}>
                       OWNER <span style={{ color: 'white' }}>{loading ? 'LOADING...' : apiData?.nft?.owner_address ? `${apiData.nft.owner_address.slice(0, 6)}...${apiData.nft.owner_address.slice(-4)}` : '0XM0FA...6066'}</span>
                     </div>
-                    <a 
-                      href={apiData?.nft?.marketplace_url || 'https://opensea.io/collection/basedpunks'} 
-                      target="_blank" 
+                    <a
+                      href={apiData?.nft?.marketplace_url || 'https://opensea.io/collection/basedpunks'}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center block" 
+                      className="border border-white px-3 py-2.5 text-xs sm:text-sm tracking-wide sm:flex-1 font-bold text-center block"
                       style={{ borderColor: '#2B2B2B', color: 'white' }}
                     >
                       VIEW ON MARKETPLACE
@@ -321,8 +326,8 @@ export default function ActivityPage() {
             ) : holdingsData && holdingsData.items.length > 0 ? (
               // Show actual NFTs from holdings API (limit to 20)
               holdingsData.items.slice(0, 20).map((item) => (
-                <div 
-                  key={item.tokenId} 
+                <div
+                  key={item.tokenId}
                   onClick={() => {
                     setSelectedNFT({
                       tokenId: item.tokenId,
@@ -500,7 +505,7 @@ export default function ActivityPage() {
                 ASKED QUESTIONS
               </h2>
             </div>
-            
+
             {/* Right Side - Questions */}
             <div>
               <div>
@@ -535,9 +540,9 @@ export default function ActivityPage() {
               <div className="px-6 py-3 flex items-center" style={{ borderRight: '1px solid #2B2B2B', color: 'white' }}>
                 <h3 className="text-sm font-bold tracking-wider">BASESTRATEGY™</h3>
               </div>
-              <div className="px-6 py-3 flex-1 flex items-center justify-end" style={{ borderRight: '1px solid #2B2B2B'}}>
+              <div className="px-6 py-3 flex-1 flex items-center justify-end" style={{ borderRight: '1px solid #2B2B2B' }}>
                 <div className="text-xs font-bold tracking-wider text-right" style={{ color: 'white' }}>
-                  WE ARE NOT AFFILIATED WITH BASED PUNKS OR TRAF.<br/> THIS IS A COMMUNITY PROJECT
+                  WE ARE NOT AFFILIATED WITH BASED PUNKS OR TRAF.<br /> THIS IS A COMMUNITY PROJECT
                 </div>
               </div>
             </div>
@@ -550,7 +555,7 @@ export default function ActivityPage() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         nftData={selectedNFT}
-        userBalance="0.1" // TODO: Get actual user balance from wallet
+        userBalance={balanceData?.formatted || '0'}
       />
     </div>
   )
